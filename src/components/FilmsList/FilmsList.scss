@@ -1,0 +1,8 @@
+@import 'src/mixin-variables';
+
+.films__list {
+  @include reset;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 36px;
+}

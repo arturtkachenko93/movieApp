@@ -1,0 +1,47 @@
+@import "src/mixin-variables.scss";
+
+.film__item {
+  display: flex;
+  margin-bottom: 36px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.film__img {
+  width: 185px;
+  height: 280px;
+  object-fit: cover;
+}
+
+.film__wrapper {
+  padding: 10px 20px 0 20px;
+}
+
+.film__title {
+  @include reset;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.film__subtitle,
+.film__category {
+  color: $font-color-light;
+}
+
+.film__subtitle {
+  display: block;
+  margin-bottom: 9px;
+}
+
+.film__category {
+  display: inline-block;
+  background: $background-category;
+  border: 1px solid #D9D9D9;
+  border-radius: 2px;
+  padding: 0 5px;
+  margin-right: 8px;
+  margin-bottom: 7px;
+}
+
+.film__description {
+  @include reset;
+}
