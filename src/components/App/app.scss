@@ -1,1 +1,24 @@
+@import "../../mixin-variables.scss";
 
+.films {
+  min-height: 100vh;
+}
+
+.alert {
+  position: relative;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search {
+  color: $font-color-light;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 12px 10px;
+  margin-bottom: 32px;
+}
+
+.pagination {
+  text-align: center;
+}

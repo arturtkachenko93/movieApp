@@ -5,7 +5,6 @@ export default class MovieService {
 
   async getResource(url) {
     const res = await fetch(`${this.apiBaseURL}${url}`);
-
     if (!res.ok) {
       throw new Error(`Could not fetch ${url} received`);
     }
@@ -14,8 +13,8 @@ export default class MovieService {
     return resJSON;
   }
 
-  async getAllFilms(searchValue) {
-    const res = await this.getResource(`/3/search/movie?api_key=${this.API_KEY}&query=${searchValue}`);
-    return res.results;
+  async getAllFilms(searchValue, page) {
+    const res = await this.getResource(`/3/search/movie?api_key=${this.API_KEY}&query=${searchValue}&page=${page}`);
+    return res;
   }
 }

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import textClipping from '../../lib/utilits';
-
 import './film.scss';
 import Pic from '../../img/test.jpg';
 
