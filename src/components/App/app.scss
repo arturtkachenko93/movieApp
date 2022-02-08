@@ -1,7 +1,14 @@
 @import "../../mixin-variables.scss";
 
-.films {
-  min-height: 100vh;
+.tabs .ant-tabs-nav {
+  &::before {
+    width: 13%;
+    top: 98%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-bottom: 2px solid $font-color-light;
+    opacity: 0.28;
+  }
 }
 
 .alert {

@@ -36,6 +36,7 @@ img {
 
 .page__wrapper {
   display: grid;
+  min-height: 100vh;
   grid-template-rows: min-content 1fr min-content;
   align-content: start;
   max-width: 1010px;

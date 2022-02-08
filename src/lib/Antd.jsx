@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-
 import {
-  Alert, Spin, Input, Pagination, Result,
+  Alert, Spin, Input, Pagination, Result, Rate,
 } from 'antd';
+import { addRatingLocalStorage } from './utilits';
+
 import 'antd/dist/antd.css';
 
 function AlertMsg() {
@@ -12,7 +13,7 @@ function AlertMsg() {
     <Alert
       className="alert"
       message="Error"
-      description="EVENT_ZALOOP"
+      description="Нам чертовски жаль, но произошла ошибка вселенского масштаба ..."
       type="error"
       showIcon
     />
@@ -23,19 +24,17 @@ function Spinner() {
   return <Spin size="large" className="spinner" />;
 }
 
-class SearchPanel extends Component {
-  onChange = (e) => {
-    const text = e.target.value;
+function SearchPanel({ search }) {
+  const onChange = (event) => {
+    const text = event.target.value;
     // eslint-disable-next-line prefer-regex-literals
     const regex = new RegExp(/^(?=.{1,64}$)\p{L}+(?:\s+\p{L}+)*$/u);
     if (regex.test(text)) {
-      this.props.search(text);
+      search(text);
     }
   };
 
-  render() {
-    return <Input className="search" placeholder="Type to search..." onChange={debounce(this.onChange, 1000)} />;
-  }
+  return <Input className="search" placeholder="Type to search..." onChange={debounce(onChange, 1000)} />;
 }
 
 function PaginationPanel({ onPage, totalPages, currPage }) {
@@ -54,11 +53,29 @@ function PaginationPanel({ onPage, totalPages, currPage }) {
 function NotFoundAlert() {
   return (
     <Result
-      status="404"
-      title="Ебать ты лох"
-      subTitle=""
+      title="Введите название фильма"
+      subTitle="видимо, что-то пошло не так ..."
     />
   );
+}
+
+class StarRate extends Component {
+  state = {
+    // eslint-disable-next-line react/no-unused-state
+    value: this.props.rating,
+  };
+
+  handleChange = (value) => {
+    this.setState({
+      // eslint-disable-next-line react/no-unused-state
+      value,
+    });
+    this.props.onRate(value, this.props.id);
+  };
+
+  render() {
+    return <Rate className="star-rate" onChange={this.handleChange} value={addRatingLocalStorage(this.props.id)} allowHalf count={10} />;
+  }
 }
 
 SearchPanel.defaultProps = {
@@ -81,6 +98,18 @@ PaginationPanel.propTypes = {
   totalPages: propTypes.number,
 };
 
+StarRate.defaultProps = {
+  id: 1488,
+  rating: 0,
+  onRate: () => {},
+};
+
+StarRate.propTypes = {
+  id: propTypes.number,
+  rating: propTypes.number,
+  onRate: propTypes.func,
+};
+
 export {
-  AlertMsg, Spinner, SearchPanel, PaginationPanel, NotFoundAlert,
+  AlertMsg, Spinner, SearchPanel, PaginationPanel, NotFoundAlert, StarRate,
 };
