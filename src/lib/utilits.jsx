@@ -12,18 +12,3 @@ export function addRatingLocalStorage(id) {
   }
   return rating;
 }
-
-export function getGenreMovies(data, genres) {
-  const genresList = [];
-  data.forEach((film) => {
-    genres.forEach((genre) => {
-      film.genre_ids.forEach((genreData) => {
-        if (genreData === genre.id) {
-          console.log(genreData);
-        }
-      });
-    });
-  });
-
-  return genresList;
-}

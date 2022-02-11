@@ -4,7 +4,7 @@ import { Tabs } from 'antd';
 import MovieService from '../../services/movie-service';
 import FilmsList from '../FilmsList';
 import { Provider } from '../../services/context';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 
 import {
   AlertMsg, SearchPanel, PaginationPanel, NotFoundAlert,
@@ -140,7 +140,17 @@ export default class App extends Component {
     } = this.state;
     const errorMsgNotFound = errorNotFound ? <NotFoundAlert /> : null;
     const errorMsg = error ? <AlertMsg /> : null;
-    const content = !error && !errorNotFound ? <FilmsList className="films__list" Data={activeTab === 'search' ? movies : rateMovies} spinner={loading} error={error} genres={genres} onRate={this.setRate} /> : null;
+    const content = !error && !errorNotFound
+      ? (
+        <FilmsList
+          className="films__list"
+          Data={activeTab === 'search' ? movies : rateMovies}
+          spinner={loading}
+          error={error}
+          genres={genres}
+          onRate={this.setRate}
+        />
+      ) : null;
     const { TabPane } = Tabs;
 
     return (

@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import { addRatingLocalStorage } from './utilits';
 
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 
 function AlertMsg() {
   return (

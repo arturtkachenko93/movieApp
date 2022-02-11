@@ -22,7 +22,19 @@ function FilmItem({ Data, onRate, genres }) {
   return (
     <>
       {
-        Data.map((film) => (<Film key={film.id} id={film.id} title={film.title} img={film.poster_path} desc={film.overview} rate={film.vote_average} filmGenre={film.genre_ids} genres={genres} onRate={onRate} />))
+        Data.map((film) => (
+          <Film
+            key={film.id}
+            id={film.id}
+            title={film.title}
+            img={film.poster_path}
+            desc={film.overview}
+            rate={film.vote_average}
+            filmGenre={film.genre_ids}
+            genres={genres}
+            onRate={onRate}
+          />
+        ))
       }
     </>
   );
