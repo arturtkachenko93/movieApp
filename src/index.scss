@@ -41,6 +41,10 @@ img {
   align-content: start;
   max-width: 1010px;
   margin: 0 auto;
-  padding: 25px 40px;
+  padding: 15px 20px;
   background-color: $background;
+
+  @media (min-width: 768px) {
+    padding: 25px 40px;
+  }
 }

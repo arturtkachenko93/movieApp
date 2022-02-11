@@ -2,19 +2,11 @@
 
 .films__list {
   @include reset;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 36px;
+  display: flex;
+  flex-wrap: wrap;
 
   &--load {
-    display: block;
     height: 100vh;
-  }
-
-  @media (max-width: 768px) {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
   }
 }
 

@@ -36,7 +36,7 @@ function Film({
           return acc;
         }, []);
         const category = filmGenres.map((genre) => (
-          <span className="film__category" key={genre}>
+          <span key={genre}>
             {genre}
           </span>
         ));
@@ -44,18 +44,12 @@ function Film({
         return (
           <li className="film__item">
             <img className="film__img" src={imgSrc} alt="Обложка фильма" />
-            <div className="film__wrapper">
-              <div className="film__wrapper-title">
-                <h2 className="film__title">{title}</h2>
-                <span className={`film__rate ${classNameRate}`}>{rate}</span>
-              </div>
-              <span className="film__subtitle">March 5, 2020</span>
-              <div>
-                {category}
-              </div>
-              <p className="film__description">{text}</p>
-              <StarRate onRate={onRate} id={id} rating={0} />
-            </div>
+            <h2 className="film__title">{title}</h2>
+            <span className={`film__rate ${classNameRate}`}>{rate}</span>
+            <span className="film__date">March 5, 2020</span>
+            <div className="film__category">{category}</div>
+            <p className="film__description">{text}</p>
+            <StarRate onRate={onRate} id={id} rating={0} />
           </li>
         );
       }}
