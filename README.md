@@ -1,3 +1,3 @@
 # MovieApp
 
-[DEMO](https://moviesapp-arturtkachenko93.vercel.app/).
+[DEMO](https://movie-app-pi-bice.vercel.app/).

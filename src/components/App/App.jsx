@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
-import { Tabs } from 'antd';
+import { Result, Tabs } from 'antd';
 import MovieService from '../../services/movie-service';
 import FilmsList from '../FilmsList';
 import { Provider } from '../../services/context';
+import AlertMsg from '../AlertMsg';
+import SearchPanel from '../SearchPanel';
+import { PaginationPanel, PaginationPanelRated } from '../Pagination';
 import 'antd/dist/antd.min.css';
-
-import {
-  AlertMsg, SearchPanel, PaginationPanel, NotFoundAlert,
-} from '../../lib/Antd';
 import './app.scss';
 
 export default class App extends Component {
@@ -24,7 +23,9 @@ export default class App extends Component {
     errorNotFound: false,
     search: '',
     page: 1,
-    totalPages: 81,
+    totalPages: 1,
+    pageRate: 1,
+    totalPagesRate: 1,
     activeTab: 'search',
   };
 
@@ -46,6 +47,10 @@ export default class App extends Component {
     if (this.state.page !== prevState.page) {
       this.getMovies();
     }
+
+    if (this.state.pageRate !== prevState.pageRate) {
+      this.getRate();
+    }
   }
 
   getMovies = () => {
@@ -56,7 +61,6 @@ export default class App extends Component {
           this.errNotFound();
           return;
         }
-
         this.setState({
           movies: movies.results,
           totalPages: movies.total_pages,
@@ -87,12 +91,11 @@ export default class App extends Component {
 
   getRate = () => {
     this.movieService
-      .getRatedMovies(this.state.guestSessionId)
+      .getRatedMovies(this.state.guestSessionId, this.state.pageRate)
       .then((movies) => {
         this.setState({
           rateMovies: movies.results,
-          totalPages: movies.total_pages,
-          activeTab: 'rated',
+          totalPagesRate: movies.total_pages,
           loading: false,
         });
       })
@@ -116,8 +119,12 @@ export default class App extends Component {
     this.setState({ search, page: 1, loading: true });
   };
 
-  onPage = (page) => {
+  onPageSearch = (page) => {
     this.setState({ page });
+  };
+
+  onPageRated = (page) => {
+    this.setState({ pageRate: page });
   };
 
   onTab = (key) => {
@@ -127,24 +134,30 @@ export default class App extends Component {
       });
     }
     if (key === '2') {
-      this.getRate();
       this.setState({
+        activeTab: 'rated',
         loading: true,
       });
+      this.getRate();
     }
   };
 
   render() {
     const {
-      movies, genres, rateMovies, loading, error, errorNotFound, page, totalPages, activeTab,
+      movies, genres, rateMovies, loading, error, errorNotFound, page, totalPages, pageRate, totalPagesRate, activeTab,
     } = this.state;
-    const errorMsgNotFound = errorNotFound ? <NotFoundAlert /> : null;
+    const errorMsgNotFound = errorNotFound ? (
+      <Result
+        title="Введите название фильма"
+        subTitle="видимо, что-то пошло не так ..."
+      />
+    ) : null;
     const errorMsg = error ? <AlertMsg /> : null;
     const content = !error && !errorNotFound
       ? (
         <FilmsList
           className="films__list"
-          Data={activeTab === 'search' ? movies : rateMovies}
+          data={activeTab === 'search' ? movies : rateMovies}
           spinner={loading}
           error={error}
           genres={genres}
@@ -152,7 +165,6 @@ export default class App extends Component {
         />
       ) : null;
     const { TabPane } = Tabs;
-
     return (
       <Provider value={{ genres }}>
         <Tabs className="tabs" defaultActiveKey="1" onChange={this.onTab} centered>
@@ -163,13 +175,13 @@ export default class App extends Component {
               {errorMsg}
               {content}
             </section>
-            {movies.length ? <PaginationPanel onPage={this.onPage} totalPages={totalPages} currPage={page} /> : null}
+            {movies.length ? <PaginationPanel onPage={this.onPageSearch} totalPages={totalPages} currPage={page} /> : null}
           </TabPane>
           <TabPane tab="Rated" key="2">
             <section className="films">
               {content}
             </section>
-            {rateMovies.length ? <PaginationPanel onPage={this.onPage} totalPages={totalPages} currPage={page} /> : null}
+            {rateMovies.length ? <PaginationPanelRated onPage={this.onPageRated} totalPages={totalPagesRate} currPage={pageRate} /> : null}
           </TabPane>
         </Tabs>
       </Provider>

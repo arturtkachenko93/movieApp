@@ -37,8 +37,8 @@ export default class MovieService {
     return res;
   }
 
-  async getRatedMovies(guestId) {
-    const res = await this.getResource(`/3/guest_session/${guestId}/rated/movies?api_key=${this.API_KEY}&language=en-US`);
+  async getRatedMovies(guestId, page) {
+    const res = await this.getResource(`/3/guest_session/${guestId}/rated/movies?api_key=${this.API_KEY}&page=${page}`);
     return res;
   }
 

@@ -52,7 +52,8 @@
     "react/state-in-constructor": ["off"],
     "react/jsx-props-no-spreading": ["off"],
     "react/static-property-placement": "off",
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "linebreak-style": ["error", "windows"]
   },
 
   "settings": {
